@@ -1,5 +1,0 @@
-﻿  lada4.cpp.cpp
-D:\proga\lada4.cpp\lada4.cpp\lada4.cpp.cpp(39,9): warning C4101: a: неиспользованная локальная переменная
-D:\proga\lada4.cpp\lada4.cpp\lada4.cpp.cpp(66,26): warning C4018: <: несоответствие типов со знаком и без знака
-D:\proga\lada4.cpp\lada4.cpp\lada4.cpp.cpp(82,26): warning C4018: <: несоответствие типов со знаком и без знака
-  lada4.cpp.vcxproj -> D:\proga\lada4.cpp\x64\Debug\lada4.cpp.exe
