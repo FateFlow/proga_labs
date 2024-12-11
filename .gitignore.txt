@@ -1,1 +1,14 @@
-.vs/*
+# Игнорировать папку .vs и x64
+.vs
+x64
+
+# Игнорировать все файлы и папки по умолчанию
+*
+
+# Исключить следующие файлы и папки из игнорирования
+!laba1_kurs2
+!laba2_kurs2.cpp
+!laba4_kurs2.cpp
+!laba4_kurs2_dop_zadanie.cpp
+!laba5_kurs2.cpp
+!main
