@@ -1,0 +1,3 @@
+﻿  laba4_kurs2_dop_zadanie.cpp.cpp
+G:\proga\laba4_kurs2_dop_zadanie.cpp\laba4_kurs2_dop_zadanie.cpp\laba4_kurs2_dop_zadanie.cpp.cpp(15,25): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  laba4_kurs2_dop_zadanie.cpp.vcxproj -> G:\proga\laba4_kurs2_dop_zadanie.cpp\x64\Debug\laba4_kurs2_dop_zadanie.cpp.exe
