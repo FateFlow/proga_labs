@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.10)
+project(RectangleDrawer)
+
+set(CMAKE_CXX_STANDARD 11)
+
+find_package(FLTK REQUIRED)
+
+add_executable(RectangleDrawer main.cpp)
+target_link_libraries(RectangleDrawer fltk fltk_images fltk_jpeg fltk_png fltk_z)
