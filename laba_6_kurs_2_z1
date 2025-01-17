@@ -1,0 +1,90 @@
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Button.H>
+#include <FL/fl_draw.H>
+#include <vector>
+#include <fstream>
+
+struct Rectangle {
+    int x, y, w, h;
+    Fl_Color color;
+};
+
+std::vector<Rectangle> rectangles;
+
+class MyWindow : public Fl_Window {
+public:
+    MyWindow(int w, int h, const char* title) : Fl_Window(w, h, title) {}
+
+    void draw() override {
+        Fl_Window::draw();
+        for (const auto& rect : rectangles) {
+            fl_color(rect.color);
+            fl_rectf(rect.x, rect.y, rect.w, rect.h);
+        }
+    }
+};
+
+void saveRectangles(const char* filename) {
+    std::ofstream ofs(filename, std::ios::binary);
+    size_t count = rectangles.size();
+    ofs.write(reinterpret_cast<const char*>(&count), sizeof(count));
+    for (const auto& rect : rectangles) {
+        ofs.write(reinterpret_cast<const char*>(&rect), sizeof(rect));
+    }
+}
+
+void loadRectangles(const char* filename) {
+    std::ifstream ifs(filename, std::ios::binary);
+    size_t count;
+    ifs.read(reinterpret_cast<char*>(&count), sizeof(count));
+    rectangles.resize(count);
+    ifs.read(reinterpret_cast<char*>(rectangles.data()), count * sizeof(Rectangle));
+}
+
+void addRectangle(Fl_Widget* widget, void*) {
+    int x = rand() % 300;
+    int y = rand() % 300;
+    int w = 100;
+    int h = 100;
+    Fl_Color color = fl_rgb_color(rand() % 256, rand() % 256, rand() % 256);
+    rectangles.push_back({x, y, w, h, color});
+    widget->window()->redraw();
+}
+
+void saveRectanglesCallback(Fl_Widget* widget, void*) {
+    saveRectangles("rectangles.dat");
+}
+
+void loadRectanglesCallback(Fl_Widget* widget, void*) {
+    loadRectangles("rectangles.dat");
+    widget->window()->redraw();
+}
+
+int main(int argc, char** argv) {
+    Fl::scheme("plastic");
+
+    MyWindow window(500, 500, "FLTK Rectangle Drawer");
+
+    int button_width = 150;
+    int button_height = 30;
+    int spacing = 20;
+    int total_width = button_width * 3 + spacing * 2;
+
+    int x_start = (window.w() - total_width) / 2;
+    int y_position = window.h() - button_height - 50;
+
+    Fl_Button addRectangleButton(x_start, y_position, button_width, button_height, "Add Rectangle");
+    addRectangleButton.callback(addRectangle, nullptr);
+
+    Fl_Button saveButton(x_start + button_width + spacing, y_position, button_width, button_height, "Save");
+    saveButton.callback(saveRectanglesCallback, nullptr);
+
+    Fl_Button loadButton(x_start + 2 * (button_width + spacing), y_position, button_width, button_height, "Load");
+    loadButton.callback(loadRectanglesCallback, nullptr);
+
+    window.end();
+    window.show(argc, argv);
+    return Fl::run();
+}
